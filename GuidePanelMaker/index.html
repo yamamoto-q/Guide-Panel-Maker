@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>ガイドパネルメーカー</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+    #preview {
+        font: 13px/1.231 'メイリオ', 'Meiryo', arial, helvetica, clean, sans-serif;
+        color: #666;
+    }
+    
+    #preview h4 {
+        font-size: 13px;
+    }
+    </style>
+    <link rel="stylesheet" href="farbtastic/farbtastic.css" type="text/css" />
+</head>
+
+<body>
+    <div class="container">
+      <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <h1>ガイドパネルメーカー</h1>
+              <hr />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <div class="form-group">
+                    <label for="titleInput">タイトル</label>
+                    <input type="email" class="form-control" id="titleInput" aria-describedby="emailHelp" value="神ってる">
+                    <small class="form-text text-muted">必要ない場合には空にしてください</small>
+                </div>
+                <div class="form-group">
+                    <label for="discInput">注釈</label>
+                    <textarea class="form-control" id="discInput">「神懸かってる」と言うところを緒方孝市監督は、いまどきの言葉を使って「神ってる」と口にした。</textarea>
+                    <small class="form-text text-muted">タイトル下に表示する注釈です。改行も有効です。<br />必用ない場合は空にしてください。</small>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group">
+                          <label>背景色</label>
+                          <div id="pickerBG"></div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group">
+                        <label>文字色</label>
+                        <div id="pickerFont"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                      <div class="form-group">
+                          <label for="sizeInput">タイトル文字サイズ</label>
+                          <input type="number" class="form-control" id="sizeInput" value="13">
+                          <small class="form-text text-muted">タイトル文字のサイズです</small>
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                      <div class="form-group">
+                          <label for="paddingInput">パディング</label>
+                          <input type="number" class="form-control" id="paddingInput" value="6">
+                          <small class="form-text text-muted">タイトルバーのスペースを調整します</small>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <hr />
+                <h3>プレビュー</h3>
+                <div id="preview">
+                </div>
+            <hr />
+                <h3>コード</h3>
+                <code id="code" style="display: block;">
+                </code>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <script type="text/javascript" src="farbtastic/farbtastic.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    (function($) {
+
+        var escapeHtml = (function(String) {
+            var escapeMap = {
+                '&': '&amp;',
+                "'": '&#x27;',
+                '`': '&#x60;',
+                '"': '&quot;',
+                '<': '&lt;',
+                '>': '&gt;'
+            };
+            var escapeReg = '[';
+            var reg;
+            for (var p in escapeMap) {
+                if (escapeMap.hasOwnProperty(p)) {
+                    escapeReg += p;
+                }
+            }
+            escapeReg += ']';
+            reg = new RegExp(escapeReg, 'g');
+
+            return function escapeHtml(str) {
+                str = (str === null || str === undefined) ? '' : '' + str;
+                return str.replace(reg, function(match) {
+                    return escapeMap[match];
+                });
+            };
+        }(String));
+
+        var fontColor = "#FFFFFF";
+        var bgColor = "#009900";
+
+        $(document).ready(function() {
+
+            var cp1 = $.farbtastic('#pickerBG');
+            cp1.setColor(bgColor);
+            cp1.linkTo(function(color) {
+                bgColor = color;
+                sync();
+            });
+
+            var cp2 = $.farbtastic('#pickerFont');
+            cp2.setColor(fontColor);
+            cp2.linkTo(function(color) {
+                fontColor = color;
+                sync();
+            });
+
+            function sync() {
+                var title = $('#titleInput').val();
+                var disc = $('#discInput').val();
+                var padding = $('#paddingInput').val() + 'px';
+                var size = $('#sizeInput').val() + 'px';
+
+                $('#preview').html('');
+                if (title.length > 0) {
+                    var $title = $('<h4>' + title + '</h4>');
+                    if( size != "13px"){
+                      $title.css('font-size', size);
+                    }
+                    $title.css('background-color', bgColor);
+                    $title.css('color', fontColor);
+                    $title.css('padding', padding);
+                    $('#preview').append($title);
+                }
+
+                if (disc.length > 0) {
+                    var $disc = disc.replace(/[\n\r]/g, "<br />");
+                    $('#preview').append($disc);
+                }
+
+                var code = $('#preview').html();
+                $('#code').html(escapeHtml(code));
+            }
+
+            $('#titleInput').keyup(function() {
+                sync();
+            });
+            $('#discInput').keyup(function() {
+                sync();
+            })
+            $('#paddingInput').keyup(function() {
+                sync();
+            });
+            $('#paddingInput').change(function() {
+                sync();
+            });
+             $('#sizeInput').keyup(function() {
+                sync();
+            });
+            $('#sizeInput').change(function() {
+                sync();
+            });
+
+            sync();
+        });
+    })(window.jQuery);
+    </script>
+</body>
+
+</html>
