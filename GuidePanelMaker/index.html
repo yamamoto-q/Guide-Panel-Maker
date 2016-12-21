@@ -24,10 +24,10 @@
 
 <body>
     <div class="container">
-      <div class="row">
+        <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <h1>ガイドパネルメーカー</h1>
-              <hr />
+                <h1>ガイドパネルメーカー</h1>
+                <hr />
             </div>
         </div>
         <div class="row">
@@ -47,46 +47,47 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
-                          <label>背景色</label>
-                          <div id="pickerBG"></div>
+                            <label>背景色</label>
+                            <div id="pickerBG"></div>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group">
-                        <label>文字色</label>
-                        <div id="pickerFont"></div>
+                            <label>文字色</label>
+                            <div id="pickerFont"></div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                      <div class="form-group">
-                          <label for="sizeInput">タイトル文字サイズ</label>
-                          <input type="number" class="form-control" id="sizeInput" value="13">
-                          <small class="form-text text-muted">タイトル文字のサイズです</small>
-                      </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group">
+                            <label for="sizeInput">タイトル文字サイズ</label>
+                            <input type="number" class="form-control" id="sizeInput" value="13">
+                            <small class="form-text text-muted">タイトル文字のサイズです</small>
+                        </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                      <div class="form-group">
-                          <label for="paddingInput">パディング</label>
-                          <input type="number" class="form-control" id="paddingInput" value="6">
-                          <small class="form-text text-muted">タイトルバーのスペースを調整します</small>
-                      </div>
+                        <div class="form-group">
+                            <label for="paddingInput">パディング</label>
+                            <input type="number" class="form-control" id="paddingInput" value="6">
+                            <small class="form-text text-muted">タイトルバーのスペースを調整します</small>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <hr />
+                <hr />
                 <h3>プレビュー</h3>
                 <div id="preview">
                 </div>
-            <hr />
+                <hr />
                 <h3>コード</h3>
                 <code id="code" style="display: block;">
                 </code>
+                <hr />
+                <div style="text-align: center;">クエっ！</div>
             </div>
         </div>
     </div>
@@ -152,8 +153,8 @@
                 $('#preview').html('');
                 if (title.length > 0) {
                     var $title = $('<h4>' + title + '</h4>');
-                    if( size != "13px"){
-                      $title.css('font-size', size);
+                    if (size != "13px") {
+                        $title.css('font-size', size);
                     }
                     $title.css('background-color', bgColor);
                     $title.css('color', fontColor);
@@ -182,7 +183,7 @@
             $('#paddingInput').change(function() {
                 sync();
             });
-             $('#sizeInput').keyup(function() {
+            $('#sizeInput').keyup(function() {
                 sync();
             });
             $('#sizeInput').change(function() {
